@@ -1,0 +1,7 @@
+Name = str(input("Enter your name :"))
+Age = int(input("Enter your age :"))
+University = str(input("Enter your University :"))
+Department = str(input("Enter your Department :"))
+CGPA = float(input("Enter your CGPA :"))
+Fav_prog_lan = str(input("Enter your Favourite Programming Language :"))
+print("Hello Everyone , My name is ", Name , " . I am ", Age , " years old . I am studying in ", University , " in the Department of ", Department , " . My CGPA is ", CGPA , " . My Favourite Programming Language is ", Fav_prog_lan)
