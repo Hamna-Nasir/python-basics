@@ -1,4 +1,4 @@
-'''# product inventory
+# product inventory
 products = {"Laptop": 120000, "Mouse": 2500, "Keyboard": 4000}
 prod = input("Enter product you want to search:")
 if prod in products:
@@ -21,7 +21,7 @@ no_of_marks = len(marks)
 def avg():
     avg_marks = total / no_of_marks
     return avg_marks
-print(f"Average Marks : {avg()}")'''
+print(f"Average Marks : {avg()}")
 
 
 # favourite foods
