@@ -23,6 +23,9 @@ while True:
         choice = int(input("Enter your choice (1-7): "))
         if choice == 1:
             student_id = int(input("Enter Student ID: "))
+            if any(student['id'] == student_id for student in data.students):
+                print(f"Student with ID {student_id} already exists. Please use a unique ID.")
+                continue
             name = input("Enter Name: ")
             age = int(input("Enter Age: "))
             department = input("Enter Department: ")

@@ -23,14 +23,14 @@ def view_students():
         print("No students found.")
         return
     for student in students:
-        print(f"ID: {student['id']}, Name: {student['name']}, Age: {student['age']}, "
-              f"Department: {student['department']}, Marks: {student['marks']}, Grade: {student['Grade']}")
+        print(f"ID: {student['id']} \nName: {student['name']} \nAge: {student['age']}"
+              f"\nDepartment: {student['department']} \nMarks: {student['marks']} \nGrade: {student['Grade']}\n")
 
 def search_student(student_id):
     for student in students:
         if student['id'] == student_id:
-            print(f"ID: {student['id']}, Name: {student['name']}, Age: {student['age']}, "
-                  f"Department: {student['department']}, Marks: {student['marks']}, Grade: {student['Grade']}")
+            print(f"ID: {student['id']} \nName: {student['name']} \nAge: {student['age']} "
+                  f"\nDepartment: {student['department']} \nMarks: {student['marks']} \nGrade: {student['Grade']}")
             return
     print(f"Student with ID {student_id} not found.")
 
@@ -65,5 +65,10 @@ def show_statistics():
         return
     total_students = len(students)
     average_marks = sum(student['marks'] for student in students) / total_students
+    highest_marks = max(student['marks'] for student in students)
+    lowest_marks = min(student['marks'] for student in students)
+    
     print(f"Total Students: {total_students}")
     print(f"Average Marks: {average_marks:.2f}")
+    print(f"Highest Marks: {highest_marks}")
+    print(f"Lowest Marks: {lowest_marks}")
