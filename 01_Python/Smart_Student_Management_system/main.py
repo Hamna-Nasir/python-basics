@@ -1,7 +1,11 @@
 import data
 import student_manager
+from db import init_db
 from helper import generate_line
 from grade import calculate_grade
+
+if not init_db():
+    print("Failed to initialize PostgreSQL database. Please check connection settings.")
 
 while True:
     print(generate_line())
