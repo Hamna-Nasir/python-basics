@@ -5,7 +5,7 @@ try:
         host="localhost",
         database="newdb",
         user="postgres",
-        password="hamnanasir",
+        password="password",
     )
 
     cursor = connection.cursor()
