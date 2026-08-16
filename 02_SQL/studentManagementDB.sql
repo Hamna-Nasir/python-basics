@@ -48,3 +48,61 @@ FROM student;
 SELECT *
 FROM student
 WHERE department = 'Software Engineering';
+
+SELECT *
+FROM student
+WHERE cgpa > 3.5;
+
+SELECT *
+FROM student
+WHERE age < 22;
+
+SELECT *
+FROM student
+WHERE department = 'Computer Science'
+AND cgpa > 3.5;
+
+SELECT *
+FROM student
+WHERE department = 'Computer Science'
+OR department = 'Information Technology';
+
+SELECT *
+FROM student
+WHERE department != 'Computer Science';
+
+
+SELECT *
+FROM student
+WHERE name LIKE '%m%';
+
+SELECT *
+FROM student
+WHERE name ILIKE 'hamna';
+
+SELECT *
+FROM student
+WHERE department IN (
+    'Computer Science',
+    'Software Engineering'
+);
+
+SELECT *
+FROM student
+WHERE cgpa BETWEEN 3.5 AND 4.0;
+
+UPDATE student
+SET cgpa = 3.95
+WHERE id = 1;
+
+SELECT *
+FROM student
+WHERE id = 1;
+
+DELETE FROM student
+WHERE id = 5;
+
+SELECT * FROM student;
+
+DELETE FROM student;
+SELECT * FROM student;
