@@ -23,3 +23,5 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    refresh_token = Column(String, nullable=True)

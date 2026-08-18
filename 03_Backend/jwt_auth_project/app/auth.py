@@ -11,6 +11,7 @@ from app.security import (
     SECRET_KEY,
     ALGORITHM,
 )
+from app.permissions import require_role
 
 router = APIRouter()
 
@@ -57,6 +58,9 @@ def login(
     access_token = create_access_token(data={"sub": user.username})
 
     refresh_token = create_refresh_token(data={"sub": user.username})
+    user.refresh_token = refresh_token
+
+    db.commit()
 
     return {
         "access_token": access_token,
@@ -89,29 +93,55 @@ def change_password(
 
     return {"message": "Password updated successfully"}
 
-@router.post("/refresh")
-def refresh_token(request: RefreshTokenRequest):
-    try:
 
-        payload = jwt.decode(
-            request.refresh_token,
-            SECRET_KEY,
-            algorithms=[ALGORITHM]
-        )
+@router.post("/refresh")
+def refresh_token(
+    request: RefreshTokenRequest,
+    db: Session = Depends(get_db),
+):
+    try:
+        payload = jwt.decode(request.refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
 
         username = payload.get("sub")
 
         if username is None:
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid refresh token"
-            )
+            raise HTTPException(status_code=401, detail="Invalid refresh token")
 
     except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid refresh token")
 
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid refresh token"
-        )
+    user = db.query(User).filter(User.username == username).first()
+
+    if user is None:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    if user.refresh_token != request.refresh_token:
+        raise HTTPException(status_code=401, detail="Refresh token has been revoked")
+
     new_access_token = create_access_token(data={"sub": username})
+
     return {"access_token": new_access_token, "token_type": "bearer"}
+
+
+@router.post("/logout")
+def logout(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    current_user.refresh_token = None
+
+    db.commit()
+
+    return {"message": "Logged out successfully"}
+
+
+@router.get("/admin")
+def admin_dashboard(current_user=Depends(require_role("admin"))):
+    return {"message": "Welcome Admin!"}
+
+
+@router.get("/users")
+def get_all_users(
+    db: Session = Depends(get_db), current_user=Depends(require_role("admin"))
+):
+    return db.query(User).all()
